@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Repository;
+namespace App\Domain\Repository;
 
-use App\Entity\Player;
+use App\Domain\Model\PlayerProperty;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Player>
+ * @extends ServiceEntityRepository<PlayerProperty>
  */
-class PlayerRepository extends ServiceEntityRepository
+class PlayerPropertyRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Player::class);
+        parent::__construct($registry, PlayerProperty::class);
     }
 
     //    /**
-    //     * @return Player[] Returns an array of Player objects
+    //     * @return PlayerProperty[] Returns an array of PlayerProperty objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class PlayerRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Player
+    //    public function findOneBySomeField($value): ?PlayerProperty
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')

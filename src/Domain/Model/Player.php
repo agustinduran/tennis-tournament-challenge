@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
-use App\Repository\PlayerRepository;
+use App\Domain\Model\PlayerPropertyValue;
+use App\Domain\Repository\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
@@ -25,6 +28,11 @@ class Player
     #[ORM\ManyToOne(inversedBy: 'gender')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Gender $gender = null;
+
+    public function __construct()
+    {
+        $this->property = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -78,4 +86,13 @@ class Player
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, PlayerPropertyValue>
+     */
+    public function getProperty(): Collection
+    {
+        return $this->property;
+    }
+
 }
