@@ -16,7 +16,7 @@ class Player
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(name: "full_name", length: 100)]
     private ?string $fullName = null;
 
     #[ORM\Column]
