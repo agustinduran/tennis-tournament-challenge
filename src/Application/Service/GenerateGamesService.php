@@ -40,6 +40,8 @@ class GenerateGamesService
             throw new InvalidArgumentException('Player count must be a power of 2 and at least 2.');
         }
 
+        // TODO: validar que no se repita un mismo jugador (ejemplo [9, 9, 9, 9])
+
         // Obtengo y valido jugadores
         $players = [];
         foreach ($playerIds as $playerId) {
