@@ -3,19 +3,25 @@
 namespace App\Domain\Repository;
 
 use App\Domain\Model\PlayerPropertyValue;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
-class PlayerPropertyValueRepository extends ServiceEntityRepository
+interface PlayerPropertyValueRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, PlayerPropertyValue::class);
-    }
+    public function save(PlayerPropertyValue $playerPropertyValue): void;
 
-    public function save(PlayerPropertyValue $playerPropertyValue): void
-    {
-        $this->_em->persist($playerPropertyValue);
-        $this->_em->flush();
-    }
+    /**
+     * @return PlayerPropertyValue[]
+     */
+    public function findAll(): array;
+
+    /**
+     * @param int $id
+     * @return PlayerPropertyValue|null
+     */
+    public function find(int $id): ?PlayerPropertyValue;
+
+    /**
+     * @param int $playerId
+     * @return PlayerPropertyValue[]
+     */
+    public function findByPlayer(int $playerId): array;
 }

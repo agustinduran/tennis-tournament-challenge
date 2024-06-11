@@ -14,6 +14,13 @@ class DoctrinePlayerPropertyRepository extends ServiceEntityRepository implement
         parent::__construct($registry, PlayerProperty::class);
     }
 
+    public function save(PlayerProperty $property): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($property);
+        $entityManager->flush();
+    }
+
     /**
      * @return PlayerProperty[]
      */

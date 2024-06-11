@@ -3,10 +3,12 @@
 namespace App\Domain\Model;
 
 use App\Domain\Model\Player;
+use App\Domain\Model\PlayerProperty;
 use App\Domain\Repository\PlayerPropertyValueRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlayerPropertyValueRepository::class)]
+#[ORM\UniqueConstraint(name: 'unique_player_property', columns: ['player_id', 'property_id'])]
 class PlayerPropertyValue
 {
     #[ORM\Id]
