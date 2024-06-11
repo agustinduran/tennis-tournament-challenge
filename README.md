@@ -148,7 +148,7 @@ Symfony serve
 
 ## Routes
 
-### 
+### API Documentation
 ```
-http://localhost:8000
+http://localhost:8000/api/doc
 ```
