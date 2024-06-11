@@ -57,4 +57,28 @@ class DoctrineTournamentRepository extends ServiceEntityRepository implements To
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
+    /** 
+     * Find tournaments by filters.
+     * 
+     * @param string|null $date
+     * @param int|null $genderId
+     * @return Tournament[]
+     */
+    public function findByFilters(?string $date, ?int $genderId): array
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        if ($date) {
+            $qb->andWhere('t.date = :date')
+               ->setParameter('date', $date);
+        }
+
+        if ($genderId) {
+            $qb->andWhere('t.gender = :genderId')
+               ->setParameter('genderId', $genderId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

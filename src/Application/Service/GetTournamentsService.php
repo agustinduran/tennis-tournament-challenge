@@ -14,11 +14,8 @@ class GetTournamentsService
         $this->tournamentRepository = $tournamentRepository;
     }
 
-    /**
-     * @return Tournament[]
-     */
-    public function execute(): array
+    public function execute(?string $date = null, ?int $genderId = null): array
     {
-        return $this->tournamentRepository->findAll();
+        return $this->tournamentRepository->findByFilters($date, $genderId);
     }
 }

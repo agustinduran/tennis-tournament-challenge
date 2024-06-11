@@ -104,6 +104,22 @@ class TournamentController extends AbstractController
         path: '/api/tournaments',
         summary: 'Get all tournaments',
         tags: ['Tournament'],
+        parameters: [
+            new OA\Parameter(
+                name: 'date',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'string', format: 'date'),
+                description: 'Filter tournaments by date (format: YYYY-MM-DD)'
+            ),
+            new OA\Parameter(
+                name: 'genderId',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'integer'),
+                description: 'Filter tournaments by gender ID'
+            )
+        ],
         responses: [
             new OA\Response(
                 response: 200,
@@ -122,9 +138,12 @@ class TournamentController extends AbstractController
             )
         ]
     )]
-    public function getTournaments(): JsonResponse
+    public function getTournaments(Request $request): JsonResponse
     {
-        $tournaments = $this->getTournamentsService->execute();
+        $date = $request->query->get('date');
+        $genderId = $request->query->get('genderId');
+        
+        $tournaments = $this->getTournamentsService->execute($date, $genderId);
 
         $data = array_map(function($tournament) {
             return [
