@@ -10,4 +10,10 @@ interface GenderRepository
      * @return Gender[]
      */
     public function findAll(): array;
+
+    /**
+     * @param int $id
+     * @return Gender|null
+     */
+    public function find(int $id): ?Gender;
 }

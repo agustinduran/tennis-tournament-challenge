@@ -21,4 +21,13 @@ class DoctrineGenderRepository extends ServiceEntityRepository implements Gender
     {
         return parent::findAll();
     }
+
+    /**
+     * @param int $id
+     * @return Gender|null
+     */
+    public function find($id, $lockMode = null, $lockVersion = null): ?Gender
+    {
+        return parent::find($id, $lockMode, $lockVersion);
+    }
 }
