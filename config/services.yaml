@@ -17,5 +17,6 @@ services:
         resource: '../src/'
         exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
 
-    # Agregar el servicio de GenderRepository
+    # Agregar el inyección de dependencias para los repositorios
     App\Domain\Repository\GenderRepository: '@App\Infrastructure\Repository\DoctrineGenderRepository'
+    App\Domain\Repository\PlayerRepository: '@App\Infrastructure\Repository\DoctrinePlayerRepository'
