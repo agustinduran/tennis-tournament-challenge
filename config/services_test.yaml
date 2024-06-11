@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    # Make the validator service public for testing purposes
+    validator:
+        public: true
