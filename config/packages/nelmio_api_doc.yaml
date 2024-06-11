@@ -1,8 +1,8 @@
 nelmio_api_doc:
     documentation:
         info:
-            title: My App
-            description: This is an awesome app!
+            title: Tennis Tournament API
+            description: API for managing tennis tournaments
             version: 1.0.0
         tags:
             - name: Gender
@@ -17,6 +17,75 @@ nelmio_api_doc:
               description: Endpoints related to games
             - name: Tournament
               description: Endpoints related to tournaments
+        components:
+            schemas:
+                Player:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        fullName:
+                            type: string
+                        habilityLevel:
+                            type: integer
+                        luckyLevel:
+                            type: integer
+                        gender:
+                            $ref: '#/components/schemas/Gender'
+                PlayerProperty:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        name:
+                            type: string
+                PlayerPropertyValue:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        player:
+                            $ref: '#/components/schemas/Player'
+                        property:
+                            $ref: '#/components/schemas/PlayerProperty'
+                        value:
+                            type: integer
+                Tournament:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        title:
+                            type: string
+                        date:
+                            type: string
+                            format: date
+                        gender:
+                            $ref: '#/components/schemas/Gender'
+                Gender:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        name:
+                            type: string
+                Game:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        tournament:
+                            $ref: '#/components/schemas/Tournament'
+                        player1:
+                            $ref: '#/components/schemas/Player'
+                        player2:
+                            $ref: '#/components/schemas/Player'
+                        winner:
+                            $ref: '#/components/schemas/Player'
+                        nextGame:
+                            $ref: '#/components/schemas/Game'
+                        stage:
+                            type: integer
     areas:
         path_patterns:
             - ^/api(?!/doc$)
