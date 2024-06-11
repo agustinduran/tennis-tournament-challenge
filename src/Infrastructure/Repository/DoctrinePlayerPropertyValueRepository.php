@@ -48,4 +48,14 @@ class DoctrinePlayerPropertyValueRepository extends ServiceEntityRepository impl
     {
         return $this->findBy(['player' => $playerId]);
     }
+
+    /**
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @return PlayerPropertyValue|null
+     */
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?PlayerPropertyValue
+    {
+        return parent::findOneBy($criteria, $orderBy);
+    }
 }

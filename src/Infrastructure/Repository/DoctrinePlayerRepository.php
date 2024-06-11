@@ -36,4 +36,15 @@ class DoctrinePlayerRepository extends ServiceEntityRepository implements Player
     {
         return parent::find($id, $lockMode, $lockVersion);
     }
+
+    /**
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @return Player|null
+     */
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?Player
+    {
+        return parent::findOneBy($criteria, $orderBy);
+    }
+
 }

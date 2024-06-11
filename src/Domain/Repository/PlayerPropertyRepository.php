@@ -16,4 +16,11 @@ interface PlayerPropertyRepository
      * @return PlayerProperty|null
      */
     public function find(int $id): ?PlayerProperty;
+
+    /**
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @return PlayerProperty|null
+     */
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?PlayerProperty;
 }

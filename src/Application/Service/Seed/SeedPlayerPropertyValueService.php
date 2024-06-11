@@ -38,6 +38,18 @@ class SeedPlayerPropertyValueService
             // Agustín Durán
             ['Agustín Durán', 'Fuerza', 50],
             ['Agustín Durán', 'Velocidad de Desplazamiento', 40],
+            // Novak Djokovic
+            ['Novak Djokovic', 'Fuerza', 80],
+            ['Novak Djokovic', 'Velocidad de Desplazamiento', 80],
+            // Guillermo Vilas
+            ['Guillermo Vilas', 'Fuerza', 85],
+            ['Guillermo Vilas', 'Velocidad de Desplazamiento', 70],
+            // David Nalbandian
+            ['David Nalbandian', 'Fuerza', 80],
+            ['David Nalbandian', 'Velocidad de Desplazamiento', 75],
+            // Andy Murray
+            ['Andy Murray', 'Fuerza', 80],
+            ['Andy Murray', 'Velocidad de Desplazamiento', 90],
         ];
 
         foreach ($playerPropertyValues as $valueData) {

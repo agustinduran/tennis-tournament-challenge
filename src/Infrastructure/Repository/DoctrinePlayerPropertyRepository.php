@@ -39,4 +39,14 @@ class DoctrinePlayerPropertyRepository extends ServiceEntityRepository implement
     {
         return parent::find($id, $lockMode, $lockVersion);
     }
+
+    /**
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @return PlayerProperty|null
+     */
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?PlayerProperty
+    {
+        return parent::findOneBy($criteria, $orderBy);
+    }
 }
