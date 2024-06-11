@@ -9,10 +9,12 @@ nelmio_api_doc:
               description: Endpoints related to genders
             - name: Player
               description: Endpoints related to players
+            - name: PlayerProperty
+              description: Endpoints related to properties
+            - name: PlayerPropertyValue
+              description: Endpoints related to property values
             - name: Game
               description: Endpoints related to games
-            - name: Property
-              description: Endpoints related to properties
             - name: Tournament
               description: Endpoints related to tournaments
     areas:
