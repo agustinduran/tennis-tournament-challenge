@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240610082848 extends AbstractMigration
+final class Version20240611090022 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +24,7 @@ final class Version20240610082848 extends AbstractMigration
         $this->addSql('CREATE TABLE gender (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE player (id INT AUTO_INCREMENT NOT NULL, gender_id INT NOT NULL, full_name VARCHAR(100) NOT NULL, hability_level INT NOT NULL, lucky_level INT NOT NULL, INDEX IDX_98197A65708A0E0 (gender_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE player_property (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE player_property_value (id INT AUTO_INCREMENT NOT NULL, player_id INT NOT NULL, property_id INT NOT NULL, value INT NOT NULL, INDEX IDX_17BD0ED099E6F5DF (player_id), INDEX IDX_17BD0ED0549213EC (property_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE player_property_value (id INT AUTO_INCREMENT NOT NULL, player_id INT NOT NULL, property_id INT NOT NULL, value INT NOT NULL, INDEX IDX_17BD0ED099E6F5DF (player_id), INDEX IDX_17BD0ED0549213EC (property_id), UNIQUE INDEX unique_player_property (player_id, property_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE tournament (id INT AUTO_INCREMENT NOT NULL, gender_id INT NOT NULL, title VARCHAR(50) NOT NULL, date DATE NOT NULL, INDEX IDX_BD5FB8D9708A0E0 (gender_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318C33D1A3E7 FOREIGN KEY (tournament_id) REFERENCES tournament (id)');
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318CC0990423 FOREIGN KEY (player1_id) REFERENCES player (id)');
