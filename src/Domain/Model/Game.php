@@ -21,13 +21,11 @@ class Game
     private ?Tournament $tournament = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false, name: "player1_id", referencedColumnName: "id")]
-    #[Assert\NotNull(message: 'The player1 should not be null.')]
+    #[ORM\JoinColumn(nullable: true, name: "player1_id", referencedColumnName: "id")]
     private ?Player $player1 = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false, name: "player2_id", referencedColumnName: "id")]
-    #[Assert\NotNull(message: 'The player2 should not be null.')]
+    #[ORM\JoinColumn(nullable: true, name: "player2_id", referencedColumnName: "id")]
     private ?Player $player2 = null;
 
     #[ORM\ManyToOne]

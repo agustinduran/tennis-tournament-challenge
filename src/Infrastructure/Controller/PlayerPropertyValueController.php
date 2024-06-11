@@ -53,14 +53,8 @@ class PlayerPropertyValueController extends AbstractController
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'id', type: 'integer'),
-                        new OA\Property(
-                            property: 'player',
-                            ref: new OA\Schema(ref: '#/components/schemas/Player')
-                        ),
-                        new OA\Property(
-                            property: 'property',
-                            ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
-                        ),
+                        new OA\Property(property: 'player', ref: '#/components/schemas/Player'),
+                        new OA\Property(property: 'property', ref: '#/components/schemas/PlayerProperty'),
                         new OA\Property(property: 'value', type: 'integer'),
                     ]
                 )
@@ -115,14 +109,8 @@ class PlayerPropertyValueController extends AbstractController
                     items: new OA\Items(
                         properties: [
                             new OA\Property(property: 'id', type: 'integer'),
-                            new OA\Property(
-                                property: 'player',
-                                ref: new OA\Schema(ref: '#/components/schemas/Player')
-                            ),
-                            new OA\Property(
-                                property: 'property',
-                                ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
-                            ),
+                            new OA\Property(property: 'player', ref: '#/components/schemas/Player'),
+                            new OA\Property(property: 'property', ref: '#/components/schemas/PlayerProperty'),
                             new OA\Property(property: 'value', type: 'integer'),
                         ]
                     )
@@ -172,14 +160,8 @@ class PlayerPropertyValueController extends AbstractController
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'id', type: 'integer'),
-                        new OA\Property(
-                            property: 'player',
-                            ref: new OA\Schema(ref: '#/components/schemas/Player')
-                        ),
-                        new OA\Property(
-                            property: 'property',
-                            ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
-                        ),
+                        new OA\Property(property: 'player', ref: '#/components/schemas/Player'),
+                        new OA\Property(property: 'property', ref: '#/components/schemas/PlayerProperty'),
                         new OA\Property(property: 'value', type: 'integer'),
                     ]
                 )
@@ -241,14 +223,8 @@ class PlayerPropertyValueController extends AbstractController
                     items: new OA\Items(
                         properties: [
                             new OA\Property(property: 'id', type: 'integer'),
-                            new OA\Property(
-                                property: 'player',
-                                ref: new OA\Schema(ref: '#/components/schemas/Player')
-                            ),
-                            new OA\Property(
-                                property: 'property',
-                                ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
-                            ),
+                            new OA\Property(property: 'player', ref: '#/components/schemas/Player'),
+                            new OA\Property(property: 'property', ref: '#/components/schemas/PlayerProperty'),
                             new OA\Property(property: 'value', type: 'integer'),
                         ]
                     )
