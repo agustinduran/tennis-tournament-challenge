@@ -45,7 +45,7 @@ class CreatePlayerPropertyValueService
         }
 
         // TODO: Validar que el valor esté dentro del rango permitido
-        // TODO: Validar que el jugador no tenga ya asignado esa propiedad
+        // TODO: Validar que el jugador no tenga ya asignada esa propiedad
 
         $playerPropertyValue = new PlayerPropertyValue();
         $playerPropertyValue->setPlayer($player);
