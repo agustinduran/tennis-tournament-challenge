@@ -41,7 +41,7 @@ class TournamentController extends AbstractController
             content: new OA\JsonContent(
                 properties: [
                     new OA\Property(property: 'title', type: 'string', example: 'Roland Garros'),
-                    new OA\Property(property: 'date', type: 'string', format: 'date', example: '2023-05-28'),
+                    new OA\Property(property: 'date', type: 'string', format: 'date', example: '2024-06-10'),
                     new OA\Property(property: 'genderId', type: 'integer', example: 1)
                 ]
             )
