@@ -31,6 +31,7 @@ class Player
 
     #[ORM\ManyToOne(inversedBy: 'gender')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Gender $gender = null;
 
     public function __construct() {}

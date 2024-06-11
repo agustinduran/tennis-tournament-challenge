@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Controller;
 
 use App\Application\Service\CreatePlayerService;
+use App\Application\Service\GetPlayersService;
+use App\Application\Service\GetPlayerService;
 use App\Domain\Repository\PlayerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,12 +16,18 @@ use OpenApi\Attributes as OA;
 class PlayerController extends AbstractController
 {
     private CreatePlayerService $createPlayerService;
-    private PlayerRepository $playerRepository;
+    private GetPlayersService $getPlayersService;
+    private GetPlayerService $getPlayerService;
 
-    public function __construct(CreatePlayerService $createPlayerService, PlayerRepository $playerRepository)
+    public function __construct(
+        CreatePlayerService $createPlayerService,
+        GetPlayersService $getPlayersService,
+        GetPlayerService $getPlayerService
+    )
     {
         $this->createPlayerService = $createPlayerService;
-        $this->playerRepository = $playerRepository;
+        $this->getPlayersService = $getPlayersService;
+        $this->getPlayerService = $getPlayerService;
     }
 
     #[Route('/api/players', name: 'create_player', methods: ['POST'])]
@@ -30,7 +38,7 @@ class PlayerController extends AbstractController
         requestBody: new OA\RequestBody(
             content: new OA\JsonContent(
                 properties: [
-                    new OA\Property(property: 'fullName', type: 'string', example: 'Rafael Nadal'),
+                    new OA\Property(property: 'fullName', type: 'string', example: 'Pico Mónaco'),
                     new OA\Property(property: 'habilityLevel', type: 'integer', example: 80),
                     new OA\Property(property: 'luckyLevel', type: 'integer', example: 60),
                     new OA\Property(property: 'genderId', type: 'integer', example: 1)
@@ -107,7 +115,7 @@ class PlayerController extends AbstractController
     )]
     public function getPlayers(): JsonResponse
     {
-        $players = $this->playerRepository->findAll();
+        $players = $this->getPlayersService->execute();
 
         $data = array_map(function($player) {
             return [
@@ -163,7 +171,7 @@ class PlayerController extends AbstractController
 
     public function getPlayer(int $id): JsonResponse
     {
-        $player = $this->playerRepository->find($id);
+        $player = $this->getPlayerService->execute($id);
 
         if (!$player) {
             return new JsonResponse(['error' => 'Player not found'], JsonResponse::HTTP_NOT_FOUND);
