@@ -102,6 +102,8 @@ src/
 │   ├── Command/
 │   ├── Query/
 │   ├── Service/
+│   │   ├── CreatePlayerService.php
+│   │   ├── RandomizeTournamentResultService.php
 │   │   └── [...]
 │   └── DTO/
 ├── Domain/
@@ -130,8 +132,9 @@ src/
     │   ├── DoctrinePlayerPropertyValueRepository.php
     │   └── DoctrineGameRepository.php
     ├── Controller/
+    │   ├── PlayerController.php
     │   ├── TournamentController.php
-    │   └── PlayerController.php
+    │   └── [...]
     └── Service/
 
 ```
