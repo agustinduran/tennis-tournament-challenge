@@ -2,13 +2,12 @@
 
 namespace App\Domain\Model;
 
-use App\Domain\Model\Player;
-use App\Domain\Model\PlayerProperty;
 use App\Domain\Repository\PlayerPropertyValueRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PlayerPropertyValueRepository::class)]
-#[ORM\UniqueConstraint(name: 'unique_player_property', columns: ['player_id', 'property_id'])]
+#[ORM\UniqueConstraint(name: 'unique_property_value', columns: ['player_id', 'property_id'])]
 class PlayerPropertyValue
 {
     #[ORM\Id]
@@ -18,13 +17,21 @@ class PlayerPropertyValue
 
     #[ORM\ManyToOne(inversedBy: 'property')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'The player should not be null.')]
     private ?Player $player = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'The property should not be null.')]
     private ?PlayerProperty $property = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'The value should not be blank.')]
+    #[Assert\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'The value must be between {{ min }} and {{ max }}.',
+    )]
     private ?int $value = null;
 
     public function getId(): ?int

@@ -14,24 +14,35 @@ class Player
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(name: "full_name", length: 100)]
-    #[Assert\NotBlank]
-    #[Assert\Length(max: 100)]
+    #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'The full name should not be blank.')]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'The full name cannot be longer than {{ limit }} characters.'
+    )]
     private ?string $fullName = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
-    #[Assert\Range(min: 1, max: 100)]
+    #[Assert\NotBlank(message: 'The hability level should not be blank.')]
+    #[Assert\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'The hability level must be between {{ min }} and {{ max }}.',
+    )]
     private ?int $habilityLevel = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
-    #[Assert\Range(min: 1, max: 100)]
+    #[Assert\NotBlank(message: 'The lucky level should not be blank.')]
+    #[Assert\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'The lucky level must be between {{ min }} and {{ max }}.',
+    )]
     private ?int $luckyLevel = null;
 
     #[ORM\ManyToOne(inversedBy: 'gender')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
+    #[Assert\NotNull(message: 'The gender should not be null.')]
     private ?Gender $gender = null;
 
     public function __construct() {}
