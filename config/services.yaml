@@ -20,3 +20,7 @@ services:
     # Agregar el inyección de dependencias para los repositorios
     App\Domain\Repository\GenderRepository: '@App\Infrastructure\Repository\DoctrineGenderRepository'
     App\Domain\Repository\PlayerRepository: '@App\Infrastructure\Repository\DoctrinePlayerRepository'
+    App\Domain\Repository\PlayerPropertyRepository: '@App\Infrastructure\Repository\DoctrinePlayerPropertyRepository'
+    App\Domain\Repository\PlayerPropertyValueRepository: '@App\Infrastructure\Repository\DoctrinePlayerPropertyValueRepository'
+    App\Domain\Repository\GameRepository: '@App\Infrastructure\Repository\DoctrineGameRepository'
+    App\Domain\Repository\TournamentRepository: '@App\Infrastructure\Repository\DoctrineTournamentRepository'
