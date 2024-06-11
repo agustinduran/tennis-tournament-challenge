@@ -16,4 +16,10 @@ interface GenderRepository
      * @return Gender|null
      */
     public function find(int $id): ?Gender;
+
+    /**
+     * @param array $criteria
+     * @return Gender|null
+     */
+    public function findOneBy(array $criteria): ?Gender;
 }

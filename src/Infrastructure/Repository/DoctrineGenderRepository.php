@@ -39,4 +39,13 @@ class DoctrineGenderRepository extends ServiceEntityRepository implements Gender
     {
         return parent::find($id, $lockMode, $lockVersion);
     }
+
+    /**
+     * @param array $criteria
+     * @return Gender|null
+     */
+    public function findOneBy(array $criteria, $lockMode = null, $lockVersion = null): ?Gender
+    {
+        return parent::findOneBy($criteria);
+    }
 }
