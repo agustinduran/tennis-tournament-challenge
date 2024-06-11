@@ -15,17 +15,20 @@ Agustín Durán
 
 ## Tabla de Contenidos
 
-- [Modelado de Datos](#modelado-de-datos)
+- [Diseño de Sistema](#diseño-de-sistema)
+- [Pruebas Funcionales Manuales](#pruebas-funcionales-manuales)
 - [Tecnología](#tecnología)
 - [Pre Requisitos](#pre-requisitos)
 - [Patrón de Arquitectura](#patrón-de-arquitectura)
-- [Instrucciónes](#how-to-install)
+- [Instrucciones](#how-to-install)
 - [Ejecutar](#ejecutar)
-- [Pruebas](#pruebas)
+- [Pruebas Automatizadas](#pruebas)
 - [Despliegue](#despliegue)
 - [Rutas](#routes)
 
-## Modelado de Datos
+## Diseño de Sistema
+
+### Modelado de Datos
 
 ![Diagrama de Entidad-Relación](docs/der.svg)
 
@@ -77,6 +80,39 @@ El algoritmo para determinar el ganador de un partido se basa en tres componente
     - Este valor tiene la menor preponderancia en el cálculo del puntaje (Un 5% del puntaje total).
 
 El puntaje total de cada jugador se calcula sumando estos componentes. Si los puntajes son iguales, se llama recursivamente a este mismo método hasta obtener un ganador.
+
+### Pruebas Funcionales Manuales
+
+#### Generar un Torneo y Obtener el Ganador del Mismo
+1. **Crear un Torneo Nuevo**
+   - Realiza una solicitud `POST` a `/api/tournaments` desde la documentación de la API para crear un torneo nuevo.
+   - Guarda el `id` resultante del torneo creado.
+
+2. **Simular Completo el Torneo**
+   - Inserta el `id` del torneo en la solicitud `POST` a `/api/tournaments/{id}/simulate-complete`.
+   - Proporciona la data necesaria en el body (utiliza los datos de ejemplo si es un torneo masculino, para torneos femeninos deberás crear jugadores femeninos).
+   
+#### Generar un Torneo y Obtener el Ganador por Etapas
+1. **Crear un Torneo Nuevo**
+   - Realiza una solicitud `POST` a `/api/tournaments` desde la documentación de la API para crear un torneo nuevo.
+   - Guarda el `id` resultante del torneo creado.
+
+2. **Generar Juegos**
+   - Inserta el `id` del torneo en la solicitud `POST` a `/api/tournaments/{id}/generate-games`.
+   - Proporciona en el body los `ids` de los jugadores.
+
+3. **Simular Partidos**
+   - Realiza una solicitud `POST` a `/api/tournaments/{id}/simulate` para simular los partidos.
+   - Obtén el ganador y el bracket final.
+
+#### Obtener un Torneo y el Ganador del Mismo
+1. **Buscar Torneo por ID**
+   - Inserta el `id` del torneo en la solicitud `GET` a `/api/tournaments/{id}/winner` para obtener el ganador del torneo.
+
+#### Obtener un Torneo con Filtro de Fecha y Género
+1. **Búsqueda Avanzada de Torneos**
+   - Realiza una solicitud `GET` a `/api/tournaments` utilizando los query params para filtrar por fecha y género.
+   - Para obtener todos los torneos, no utilices ningún parámetro de búsqueda.
 
 
 ## Tecnología
@@ -179,7 +215,7 @@ php bin/console app:seed-database
 Symfony serve
 ```
 
-## Pruebas
+## Pruebas Automatizadas
 
 ### Crear base de datos para pruebas
 ```sql
