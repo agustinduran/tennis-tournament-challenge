@@ -1,51 +1,61 @@
 # Tennis Tournament Challenge 🎾
 
-## Overview
-This is a challenge backend project for GeoPagos company.
+## Descripción
+Este es un proyecto challenge backend realizado para GeoPagos.
 
-## Author
+## Autor
 
 Agustín Durán
 
 - GitHub: https://github.com/agustinduran
 - LinkedIn: https://www.linkedin.com/in/agustineduran/
 
-## Table of contents
+## Tabla de Contenidos
 
 - [Modelado de Datos](#modelado-de-datos)
-- [Technology](#technology)
-- [Pre Requisites](#pre-requisites)
-- [Architecture](#architecture)
-- [How To Install](#how-to-install)
-- [Run](#run)
-- [Routes](#routes)
+- [Tecnología](#tecnología)
+- [Pre Requisitos](#pre-requisitos)
+- [Patrón de Arquitectura](#patrón-de-arquitectura)
+- [Instrucciónes](#how-to-install)
+- [Ejecución](#run)
+- [Rutas](#routes)
 
 ## Modelado de Datos
 
 ![Diagrama de Entidad-Relación](docs/der.svg)
 
-## Justificaciones de Diseño
+### Justificaciones de Diseño
 
-## Technology
+Para resolver este desafío opté por tener desacoplado los valores de las propiedades (player_property_values) con respecto a la definición de las propiedades (properties), aquí van a poder estar las propiedades del tipo (Fuerza, Tiempo de Reacción, etc.). Por motivos de extensibilidad decidí no implementar el género en la tabla de propiedades, se deberá evaluar a nivel backend.
+
+El torneo estará compuesto por partidos (games), los cuáles tendrán una etapa definida (stage), el cuál: 1 será la etapa de final, 2 semifinal, 3 cuartos, y así sucesivamente... Estos partidos contarán con un enlace al siguiente partido dentro del cuadro, de manera que se podrá saber quien podría jugar contra quién de los próximos encuentros. Una vez obtenido al  ganador del partido, este se almacenará en el atributo de player_winner_id.
+
+Para obtener el ganador del torneo simplemente se debe hacer una intersección entre la tabla games y tournament, con stage 1 obteniendo su player_winner_id.
+
+## Tecnología
 
 * Programming languange: PHP 8.1.19
 * App Framework: Symfony 6.4.*
 * Database engine: MariaDB
 
-## Pre requisites
+## Pre requisitos
 
-* Symfony 6.* with PHP 7.4.*
-* Composer installed
-* Linux/Mac terminal (Or emulated linux on Windows)
-* No services running on localhost port 8000 or 3306
+* Symfony 6.* con PHP 8.1.*
+* Composer instalado
+* Linux/Mac terminal (O emular linux en Windows)
+* No poseer servicios corriendo en localhost puertos 8000 o 3306
 
-## Architecture
+## Patrón de Arquitectura
+
+Se ha implementado una arquitectura hexagonal con algunos principios del DDD.
+
 ```scala
 src/
 ├── Application/
 │   ├── Command/
 │   ├── Query/
 │   ├── Service/
+│   │   └── [...]
 │   └── DTO/
 ├── Domain/
 │   ├── Model/
@@ -66,12 +76,12 @@ src/
 │   └── ValueObject/
 └── Infrastructure/
     ├── Doctrine/
-    │   ├── GenderRepository.php
-    │   ├── TournamentRepository.php
-    │   ├── PlayerRepository.php
-    │   ├── PropertyRepository.php
-    │   ├── PlayerPropertyValueRepository.php
-    │   └── GameRepository.php
+    │   ├── DoctrineGenderRepository.php
+    │   ├── DoctrineTournamentRepository.php
+    │   ├── DoctrinePlayerRepository.php
+    │   ├── DoctrinePropertyRepository.php
+    │   ├── DoctrinePlayerPropertyValueRepository.php
+    │   └── DoctrineGameRepository.php
     ├── Controller/
     │   ├── TournamentController.php
     │   └── PlayerController.php
@@ -79,15 +89,15 @@ src/
 
 ```
 
-## How to install
+## Cómo Instalar
 
-### Create a new database
+### Crear base de datos
 ```sql
 CREATE DATABASE tennis_tournament_challenge;
 ```
 
-### Set enviroment variables
-#### Copy .env.example file
+### Insertar variables de entorno
+#### Copiar archivo .env.example
 ```
 cp .env .env.local
 ```
@@ -112,17 +122,17 @@ DB_USERNAME=[your_username]
 DB_PASSWORD=[your_password]
 ```
 
-### Install dependencies
+### Instalar dependencias
 ```
 composer install
 ```
 
-### Run migrations
+### Ejecutar migrations
 ```
 php bin/console doctrine:migrations:migrate
 ```
 
-### Run seeders
+### Ejecutar seeders
 ```
 php bin/console app:seed-database
 ```
