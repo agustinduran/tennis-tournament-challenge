@@ -3,9 +3,9 @@
 namespace App\Application\Service;
 
 use App\Domain\Model\PlayerPropertyValue;
+use App\Domain\Repository\PlayerPropertyValueRepository;
 use App\Domain\Repository\PlayerRepository;
 use App\Domain\Repository\PlayerPropertyRepository;
-use App\Domain\Repository\PlayerPropertyValueRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
@@ -31,10 +31,13 @@ class CreatePlayerPropertyValueService
     public function execute(int $playerId, int $propertyId, int $value): PlayerPropertyValue
     {
         $player = $this->playerRepository->find($playerId);
-        $property = $this->playerPropertyRepository->find($propertyId);
+        if (!$player) {
+            throw new \InvalidArgumentException('Invalid player ID');
+        }
 
-        if (!$player || !$property) {
-            throw new \InvalidArgumentException("Invalid player or property ID");
+        $property = $this->playerPropertyRepository->find($propertyId);
+        if (!$property) {
+            throw new \InvalidArgumentException('Invalid property ID');
         }
 
         $playerPropertyValue = new PlayerPropertyValue();
