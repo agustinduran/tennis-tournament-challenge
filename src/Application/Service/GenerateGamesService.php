@@ -46,16 +46,13 @@ class GenerateGamesService
         // Randomizar jugadores
         shuffle($players);
 
-        $stage = log(count($players), 2);
+        $stage = intval(log(count($players), 2));
+        $nextGames = [];
 
-        // FIXME:
-        // $numberGamesOnStage = $stage * 2;
-
-        for ($stageBuffer = 0; $stageBuffer <= $stage; $stageBuffer++) {
+        for ($stageBuffer = 1; $stageBuffer <= $stage; $stageBuffer++) {
             // Cantidad de juegos por etapa
-            $numberGamesOnStage = $stageBuffer * 2;
+            $numberGamesOnStage = pow(2, $stageBuffer) / 2;
 
-            $nextGames = [];
             for ($i = 0; $i < $numberGamesOnStage; $i++) {
                 $game = new Game();
                 $game->setTournament($tournament);
@@ -69,12 +66,12 @@ class GenerateGamesService
         
                     // Elimino los dos primeros de la lista
                     if (count($players) > 1)
-                        $players = array_slice($players, 1);
+                        $players = array_slice($players, 2);
                 }
 
-                // Inserto el siguiente juego
-                if ($nextGames) {
-                    $game->setNextGame($nextGames[$i / 2]);
+                // Inserto el siguiente juego en caso de existir
+                if (isset($nextGames[$stageBuffer-1])) {
+                    $game->setNextGame($nextGames[$stageBuffer-1][$i]);
                 }
 
                 // Validación de errores
@@ -85,7 +82,8 @@ class GenerateGamesService
 
                 $this->gameRepository->save($game);
 
-                $nextGames[] = $game;
+                $nextGames[$stageBuffer][] = $game;
+                $nextGames[$stageBuffer][] = $game;
             }
         }
 
