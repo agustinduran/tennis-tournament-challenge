@@ -55,7 +55,7 @@ El algoritmo para la generación de partidos en un torneo con un número de juga
 
 ### Algoritmo Determinador de Ganador en un Partido
 
-El algoritmo para determinar el ganador de un partido se basa en tres factores:
+El algoritmo para determinar el ganador de un partido se basa en tres componentes principales:
 
 ![Fórmula](docs/formula-white.png)
 
