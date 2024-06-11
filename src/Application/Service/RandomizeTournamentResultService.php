@@ -32,7 +32,7 @@ class RandomizeTournamentResultService
         $this->validator = $validator;
     }
 
-    public function execute(Tournament $tournament, array $playerIds): void
+    public function execute(Tournament $tournament): void
     {
         if ($this->tournamentRepository->getCountGames($tournament->getId()) === 0) {
             throw new InvalidArgumentException('Tournament has no games.');
