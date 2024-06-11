@@ -28,7 +28,7 @@ Agustín Durán
 
 Para resolver este desafío opté por tener desacoplado los valores de las propiedades (player_property_values) con respecto a la definición de las propiedades (properties), aquí van a poder estar las propiedades del tipo (Fuerza, Tiempo de Reacción, etc.). Por motivos de extensibilidad decidí no implementar el género en la tabla de propiedades, se deberá evaluar a nivel backend.
 
-El torneo estará compuesto por partidos (games), los cuáles tendrán una etapa definida (stage), el cuál: 1 será la etapa de final, 2 semifinal, 3 cuartos, y así sucesivamente... Estos partidos contarán con un enlace al siguiente partido dentro del cuadro, de manera que se podrá saber quien podría jugar contra quién de los próximos encuentros. Una vez obtenido al  ganador del partido, este se almacenará en el atributo de player_winner_id.
+El torneo estará compuesto por partidos (games), los cuáles tendrán una etapa definida (stage), el cuál: 0 será la etapa de final, 1 semifinal, 2 cuartos, y así sucesivamente... Estos partidos contarán con un enlace al siguiente partido dentro del cuadro, de manera que se podrá saber quien podría jugar contra quién de los próximos encuentros. Una vez obtenido al  ganador del partido, este se almacenará en el atributo de player_winner_id.
 
 Para obtener el ganador del torneo simplemente se debe hacer una intersección entre la tabla games y tournament, con stage 1 obteniendo su player_winner_id.
 

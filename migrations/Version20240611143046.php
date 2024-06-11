@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240611094425 extends AbstractMigration
+final class Version20240611143046 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20240611094425 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE games (id INT AUTO_INCREMENT NOT NULL, tournament_id INT NOT NULL, player1_id INT NOT NULL, player2_id INT NOT NULL, player_winner_id INT NOT NULL, next_game_id INT NOT NULL, stage INT NOT NULL, INDEX IDX_FF232B3133D1A3E7 (tournament_id), INDEX IDX_FF232B31C0990423 (player1_id), INDEX IDX_FF232B31D22CABCD (player2_id), INDEX IDX_FF232B31FDF0E181 (player_winner_id), INDEX IDX_FF232B312601F3A7 (next_game_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE games (id INT AUTO_INCREMENT NOT NULL, tournament_id INT NOT NULL, player1_id INT DEFAULT NULL, player2_id INT DEFAULT NULL, player_winner_id INT DEFAULT NULL, next_game_id INT DEFAULT NULL, stage INT NOT NULL, INDEX IDX_FF232B3133D1A3E7 (tournament_id), INDEX IDX_FF232B31C0990423 (player1_id), INDEX IDX_FF232B31D22CABCD (player2_id), INDEX IDX_FF232B31FDF0E181 (player_winner_id), INDEX IDX_FF232B312601F3A7 (next_game_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE genders (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE player_properties (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE player_property_values (id INT AUTO_INCREMENT NOT NULL, player_id INT NOT NULL, property_id INT NOT NULL, value INT NOT NULL, INDEX IDX_9DCAA0D199E6F5DF (player_id), INDEX IDX_9DCAA0D1549213EC (property_id), UNIQUE INDEX unique_property_value (player_id, property_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
