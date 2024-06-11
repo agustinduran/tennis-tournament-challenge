@@ -40,6 +40,10 @@ class CreatePlayerPropertyValueService
             throw new \InvalidArgumentException('Invalid property ID');
         }
 
+        if ($property->getGender() != $player->getGender()) {
+            throw new \InvalidArgumentException('Invalid property for player with id $player->getId(). Gender doesn\'t match');
+        }
+
         $playerPropertyValue = new PlayerPropertyValue();
         $playerPropertyValue->setPlayer($player);
         $playerPropertyValue->setProperty($property);

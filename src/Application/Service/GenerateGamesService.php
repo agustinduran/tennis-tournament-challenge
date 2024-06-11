@@ -44,9 +44,10 @@ class GenerateGamesService
         $players = [];
         foreach ($playerIds as $playerId) {
             $player = $this->playerRepository->find($playerId);
-            if (!$player) {
+            if (!$player)
                 throw new InvalidArgumentException("Player with ID $playerId not found.");
-            }
+            if (!$player->getGender() != $tournament->getGender())
+                throw new InvalidArgumentException("Player with ID $playerId doesn't match tournament because their gender");
             $players[] = $player;
         }
 

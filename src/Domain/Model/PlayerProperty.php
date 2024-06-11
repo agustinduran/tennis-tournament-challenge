@@ -23,6 +23,11 @@ class PlayerProperty
     )]
     private ?string $name = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'The gender should not be null.')]
+    private ?Gender $gender = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,7 +41,17 @@ class PlayerProperty
     public function setName(string $name): static
     {
         $this->name = $name;
+        return $this;
+    }
 
+    public function getGender(): ?Gender
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?Gender $gender): static
+    {
+        $this->gender = $gender;
         return $this;
     }
 }
