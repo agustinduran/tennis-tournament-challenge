@@ -3,6 +3,9 @@
 ## Descripción
 Este es un proyecto challenge backend realizado para GeoPagos.
 
+Sí querés probar la API de manera rápida accedé a este link:
+https://52jf9vqk-8000.brs.devtunnels.ms/api/doc
+
 ## Autor
 
 Agustín Durán
@@ -17,7 +20,9 @@ Agustín Durán
 - [Pre Requisitos](#pre-requisitos)
 - [Patrón de Arquitectura](#patrón-de-arquitectura)
 - [Instrucciónes](#how-to-install)
-- [Ejecución](#run)
+- [Ejecutar](#ejecutar)
+- [Pruebas](#pruebas)
+- [Despliegue](#despliegue)
 - [Rutas](#routes)
 
 ## Modelado de Datos
@@ -139,29 +144,14 @@ CREATE DATABASE tennis_tournament_challenge;
 ```
 
 ### Insertar variables de entorno
-#### Copiar archivo .env.example
+#### Copiar archivo .env
 ```
 cp .env .env.local
 ```
 
-#### Put your database host on
+#### Insertá las credenciales de tu servidor web en el .env
 ```
-DB_HOST=[your_host]
-```
-
-#### Put your database port on
-```
-DB_PORT=[your_port]
-```
-
-#### Put your database username on
-```
-DB_USERNAME=[your_username]
-```
-
-#### Put your database password on
-```
-DB_PASSWORD=[your_password]
+DATABASE_URL="mysql://user:password@127.0.0.1:3306/tennis_tournament_challenge"
 ```
 
 ### Instalar dependencias
@@ -179,18 +169,45 @@ php bin/console doctrine:migrations:migrate
 php bin/console app:seed-database
 ```
 
-## API
+## Ejecutar
 
-## Run
-
-### Run app
+### Ejecutar App
 ```
 Symfony serve
 ```
 
-## Routes
+## Pruebas
+
+### Crear base de datos para pruebas
+```sql
+CREATE DATABASE tennis_tournament_challenge_test;
+```
+
+
+### Copiar archivo .env.test
+```
+cp .env.test .env.test.local
+```
+
+#### Insertá las credenciales de tu base de datos de pruebas en el .env.test
+```
+DATABASE_URL="mysql://user:password@127.0.0.1:3306/tennis_tournament_challenge_test"
+```
+
+### Ejecutar pruebas de integración y unitarias
+```
+php bin/phpunit
+```
+
+## Rutas
 
 ### API Documentation
 ```
 http://localhost:8000/api/doc
+```
+
+## Despliegue
+Se puede acceder a la API mediante esta dirección
+```
+https://52jf9vqk-8000.brs.devtunnels.ms/api/doc
 ```
