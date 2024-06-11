@@ -13,5 +13,18 @@ interface GameRepository
      */
     public function findAll(): array;
 
+    /**
+     * @param int $id
+     * @return Game|null
+     */
     public function find(int $id): ?Game;
+
+    /**
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return Game[]
+     */
+    public function findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array;
 }
