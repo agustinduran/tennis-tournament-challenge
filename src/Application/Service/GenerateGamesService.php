@@ -87,25 +87,5 @@ class GenerateGamesService
             }
         }
 
-        // Linkeo los siguientes juegos
-        // foreach ($games as $stage => $stageGames) {
-        //     foreach ($stageGames as $index => $game) {
-        //         if (isset($games[$stage - 1])) {
-        //             $nextGame = $games[$stage - 1][floor($index / 2)];
-        //             $game->setNextGame($nextGame);
-        //         }
-        //     }
-        // }
-
-        // while (count($players) > 1) {
-        //     $stage--;
-        //     $nextStageGames = [];
-        //     for ($i = 0; $i < count($players); $i += 2) {
-                
-        //     }
-        //     $players = $nextStageGames;
-        // }
-        
-
     }
 }
