@@ -2,12 +2,13 @@
 
 namespace App\Domain\Model;
 
-use App\Domain\Model\Player;
-use App\Domain\Model\Tournament;
 use App\Domain\Repository\GameRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
+#[ORM\Table(name: "games")]
 class Game
 {
     #[ORM\Id]
@@ -15,32 +16,44 @@ class Game
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull(message: 'The date should not be null.')]
+    private ?\DateTimeInterface $date = null;
+
+    #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'The tournament should not be null.')]
     private ?Tournament $tournament = null;
 
-    #[ORM\Column]
-    private ?int $stage = null;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'The player1 should not be null.')]
     private ?Player $player1 = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'The player2 should not be null.')]
     private ?Player $player2 = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Player $playerWinner = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Game $nextGame = null;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Player $winner = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
+
+        return $this;
     }
 
     public function getTournament(): ?Tournament
@@ -51,18 +64,6 @@ class Game
     public function setTournament(?Tournament $tournament): static
     {
         $this->tournament = $tournament;
-
-        return $this;
-    }
-
-    public function getStage(): ?int
-    {
-        return $this->stage;
-    }
-
-    public function setStage(int $stage): static
-    {
-        $this->stage = $stage;
 
         return $this;
     }
@@ -91,26 +92,14 @@ class Game
         return $this;
     }
 
-    public function getPlayerWinner(): ?Player
+    public function getWinner(): ?Player
     {
-        return $this->playerWinner;
+        return $this->winner;
     }
 
-    public function setPlayerWinner(?Player $playerWinner): static
+    public function setWinner(?Player $winner): static
     {
-        $this->playerWinner = $playerWinner;
-
-        return $this;
-    }
-
-    public function getNextGame(): ?Game
-    {
-        return $this->nextGame;
-    }
-
-    public function setNextGame(?Game $nextGame): static
-    {
-        $this->nextGame = $nextGame;
+        $this->winner = $winner;
 
         return $this;
     }

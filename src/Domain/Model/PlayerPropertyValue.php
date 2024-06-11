@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PlayerPropertyValueRepository::class)]
+#[ORM\Table(name: "player_property_values")]
 #[ORM\UniqueConstraint(name: 'unique_property_value', columns: ['player_id', 'property_id'])]
 class PlayerPropertyValue
 {

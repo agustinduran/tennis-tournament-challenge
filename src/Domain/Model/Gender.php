@@ -6,6 +6,7 @@ use App\Domain\Repository\GenderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GenderRepository::class)]
+#[ORM\Table(name: "genders")]
 class Gender
 {
     #[ORM\Id]
