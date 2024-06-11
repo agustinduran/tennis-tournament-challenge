@@ -1,12 +1,6 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
 services:
-    # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -17,10 +11,14 @@ services:
         resource: '../src/'
         exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
 
-    # Insertar inyección de dependencias para los repositorios
+    # Repositories
     App\Domain\Repository\GenderRepository: '@App\Infrastructure\Repository\DoctrineGenderRepository'
     App\Domain\Repository\PlayerRepository: '@App\Infrastructure\Repository\DoctrinePlayerRepository'
     App\Domain\Repository\PlayerPropertyRepository: '@App\Infrastructure\Repository\DoctrinePlayerPropertyRepository'
     App\Domain\Repository\PlayerPropertyValueRepository: '@App\Infrastructure\Repository\DoctrinePlayerPropertyValueRepository'
     App\Domain\Repository\GameRepository: '@App\Infrastructure\Repository\DoctrineGameRepository'
     App\Domain\Repository\TournamentRepository: '@App\Infrastructure\Repository\DoctrineTournamentRepository'
+
+    # Services
+    App\Application\Service\CalculateScoreByPlayerService: ~
+    App\Application\Service\DetermineGameWinnerService: ~
