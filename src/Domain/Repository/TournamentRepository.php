@@ -3,41 +3,15 @@
 namespace App\Domain\Repository;
 
 use App\Domain\Model\Tournament;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Tournament>
- */
-class TournamentRepository extends ServiceEntityRepository
+interface TournamentRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Tournament::class);
-    }
+    public function save(Tournament $tournament): void;
 
-    //    /**
-    //     * @return Tournament[] Returns an array of Tournament objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return Tournament[]
+     */
+    public function findAll(): array;
 
-    //    public function findOneBySomeField($value): ?Tournament
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function find(int $id): ?Tournament;
 }
