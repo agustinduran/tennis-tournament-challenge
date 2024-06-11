@@ -2,11 +2,9 @@
 
 namespace App\Domain\Model;
 
-use App\Domain\Model\PlayerPropertyValue;
 use App\Domain\Repository\PlayerRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
 class Player
@@ -17,22 +15,25 @@ class Player
     private ?int $id = null;
 
     #[ORM\Column(name: "full_name", length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 100)]
     private ?string $fullName = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 1, max: 100)]
     private ?int $habilityLevel = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 1, max: 100)]
     private ?int $luckyLevel = null;
 
     #[ORM\ManyToOne(inversedBy: 'gender')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Gender $gender = null;
 
-    public function __construct()
-    {
-        $this->property = new ArrayCollection();
-    }
+    public function __construct() {}
 
     public function getId(): ?int
     {
@@ -85,14 +86,6 @@ class Player
         $this->gender = $gender;
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, PlayerPropertyValue>
-     */
-    public function getProperty(): Collection
-    {
-        return $this->property;
     }
 
 }
