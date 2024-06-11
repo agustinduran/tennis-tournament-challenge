@@ -39,4 +39,22 @@ class DoctrineTournamentRepository extends ServiceEntityRepository implements To
     {
         return parent::find($id, $lockMode, $lockVersion);
     }
+
+    /**
+     * Get the count of games associated with a tournament.
+     *
+     * @param int $tournamentId
+     * @return int
+     */
+    public function getCountGames(int $tournamentId): int
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('COUNT(g.id)')
+            ->innerJoin('t.games', 'g')
+            ->where('t.id = :tournamentId')
+            ->setParameter('tournamentId', $tournamentId);
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
 }

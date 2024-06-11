@@ -3,6 +3,8 @@
 namespace App\Domain\Model;
 
 use App\Domain\Repository\TournamentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -32,6 +34,15 @@ class Tournament
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'The gender should not be null.')]
     private ?Gender $gender = null;
+
+    #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: Game::class)]
+    private Collection $games;
+
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -73,4 +84,13 @@ class Tournament
 
         return $this;
     }
+
+    /**
+     * @return Collection|Game[]
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+    
 }

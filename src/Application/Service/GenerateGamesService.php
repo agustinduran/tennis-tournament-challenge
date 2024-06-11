@@ -15,20 +15,27 @@ class GenerateGamesService
 {
     private GameRepository $gameRepository;
     private PlayerRepository $playerRepository;
+    private TournamentRepository $tournamentRepository;
     private ValidatorInterface $validator;
 
     public function __construct(
         GameRepository $gameRepository,
         PlayerRepository $playerRepository,
+        TournamentRepository $tournamentRepository,
         ValidatorInterface $validator
     ) {
         $this->gameRepository = $gameRepository;
         $this->playerRepository = $playerRepository;
+        $this->tournamentRepository = $tournamentRepository;
         $this->validator = $validator;
     }
 
     public function execute(Tournament $tournament, array $playerIds): void
     {
+        if ($this->tournamentRepository->getCountGames($tournament->getId()) > 0) {
+            throw new InvalidArgumentException('Tournament already has games.');
+        }
+
         if (count($playerIds) < 2 || (count($playerIds) & (count($playerIds) - 1)) !== 0) {
             throw new InvalidArgumentException('Player count must be a power of 2 and at least 2.');
         }

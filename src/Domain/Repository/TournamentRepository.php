@@ -14,4 +14,6 @@ interface TournamentRepository
     public function findAll(): array;
 
     public function find(int $id): ?Tournament;
+
+    public function getCountGames(int $tournamentId): int;
 }
