@@ -1,32 +1,34 @@
 # Tennis Tournament Challenge 🎾
 
-## Descripción
+## Descripción 📄
 Este es un proyecto challenge backend realizado para GeoPagos.
 
-Sí querés probar la API de manera rápida accedé a este link:
-https://52jf9vqk-8000.brs.devtunnels.ms/api/doc
+Si querés probar la API de manera rápida, accedé a este link:
+[Documentación de la API](https://52jf9vqk-8000.brs.devtunnels.ms/api/doc) 🌐
 
-## Autor
+URL Limpia: [https://52jf9vqk-8000.brs.devtunnels.ms/api/doc](https://52jf9vqk-8000.brs.devtunnels.ms/api/doc)
+
+## Autor 👨‍💻
 
 Agustín Durán
 
-- GitHub: https://github.com/agustinduran
-- LinkedIn: https://www.linkedin.com/in/agustineduran/
+- [GitHub](https://github.com/agustinduran)
+- [LinkedIn](https://www.linkedin.com/in/agustineduran/)
 
-## Tabla de Contenidos
+## Tabla de Contenidos 📑
 
 - [Diseño de Sistema](#diseño-de-sistema)
 - [Pruebas Funcionales Manuales](#pruebas-funcionales-manuales)
 - [Tecnología](#tecnología)
 - [Pre Requisitos](#pre-requisitos)
 - [Patrón de Arquitectura](#patrón-de-arquitectura)
-- [Instrucciones](#how-to-install)
+- [Instrucciones](#cómo-instalar)
 - [Ejecutar](#ejecutar)
-- [Pruebas Automatizadas](#pruebas)
+- [Pruebas Automatizadas](#pruebas-automatizadas)
 - [Despliegue](#despliegue)
-- [Rutas](#routes)
+- [Rutas](#rutas)
 
-## Diseño de Sistema
+## Diseño de Sistema 🛠️
 
 ### Modelado de Datos
 
@@ -81,7 +83,7 @@ El algoritmo para determinar el ganador de un partido se basa en tres componente
 
 El puntaje total de cada jugador se calcula sumando estos componentes. Si los puntajes son iguales, se llama recursivamente a este mismo método hasta obtener un ganador.
 
-### Pruebas Funcionales Manuales
+## Pruebas Funcionales Manuales 🧪
 
 #### Generar un Torneo y Obtener el Ganador del Mismo
 1. **Crear un Torneo Nuevo**
@@ -114,21 +116,20 @@ El puntaje total de cada jugador se calcula sumando estos componentes. Si los pu
    - Realiza una solicitud `GET` a `/api/tournaments` utilizando los query params para filtrar por fecha y género.
    - Para obtener todos los torneos, no utilices ningún parámetro de búsqueda.
 
+## Tecnología 🖥️
 
-## Tecnología
+* Lenguaje de programación: PHP 8.1.19
+* Framework: Symfony 6.4.*
+* Motor de base de datos: MariaDB
 
-* Programming languange: PHP 8.1.19
-* App Framework: Symfony 6.4.*
-* Database engine: MariaDB
-
-## Pre requisitos
+## Pre Requisitos 📋
 
 * Symfony 6.* con PHP 8.1.*
 * Composer instalado
-* Linux/Mac terminal (O emular linux en Windows)
-* No poseer servicios corriendo en localhost puertos 8000 o 3306
+* Terminal Linux/Mac (o emulación de Linux en Windows)
+* No tener servicios corriendo en `localhost` puertos 8000 o 3306
 
-## Patrón de Arquitectura
+## Patrón de Arquitectura 🏛️
 
 Se ha implementado una arquitectura hexagonal con algunos principios del DDD.
 
@@ -172,10 +173,9 @@ src/
     │   ├── TournamentController.php
     │   └── [...]
     └── Service/
-
 ```
 
-## Cómo Instalar
+## Cómo Instalar ⚙️
 
 ### Crear base de datos
 ```sql
@@ -188,7 +188,7 @@ CREATE DATABASE tennis_tournament_challenge;
 cp .env .env.local
 ```
 
-#### Insertá las credenciales de tu servidor web en el .env
+#### Insertar las credenciales de tu servidor web en el .env
 ```
 DATABASE_URL="mysql://user:password@127.0.0.1:3306/tennis_tournament_challenge"
 ```
@@ -208,14 +208,14 @@ php bin/console doctrine:migrations:migrate
 php bin/console app:seed-database
 ```
 
-## Ejecutar
+## Ejecutar 🚀
 
 ### Ejecutar App
 ```
 Symfony serve
 ```
 
-## Pruebas Automatizadas
+## Pruebas Automatizadas 🧪
 
 ### Crear base de datos para pruebas
 ```sql
@@ -238,14 +238,15 @@ DATABASE_URL="mysql://user:password@127.0.0.1:3306/tennis_tournament_challenge_t
 php bin/phpunit
 ```
 
-## Rutas
+## Rutas 🌍
 
 ### API Documentation
 ```
 http://localhost:8000/api/doc
 ```
 
-## Despliegue
+## Despliegue 📦
+
 Se puede acceder a la API mediante esta dirección
 ```
 https://52jf9vqk-8000.brs.devtunnels.ms/api/doc
