@@ -22,9 +22,10 @@ class PlayerController extends AbstractController
         $this->playerRepository = $playerRepository;
     }
 
-    #[Route('/api/player', name: 'create_player', methods: ['POST'])]
+    #[Route('/api/players', name: 'create_player', methods: ['POST'])]
     #[OA\Post(
-        path: '/api/player',
+        path: '/api/players',
+        tags: ['Player'],
         summary: 'Create a new player',
         requestBody: new OA\RequestBody(
             content: new OA\JsonContent(
@@ -84,6 +85,7 @@ class PlayerController extends AbstractController
     #[OA\Get(
         path: '/api/players',
         summary: 'Get all players',
+        tags: ['Player'],
         responses: [
             new OA\Response(
                 response: 200,
@@ -120,10 +122,11 @@ class PlayerController extends AbstractController
         return new JsonResponse($data, JsonResponse::HTTP_OK);
     }
 
-    #[Route('/api/player/{id}', name: 'get_player', methods: ['GET'])]
+    #[Route('/api/players/{id}', name: 'get_player', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/player/{id}',
+        path: '/api/players/{id}',
         summary: 'Get a player by ID',
+        tags: ['Player'],
         parameters: [
             new OA\Parameter(
                 name: 'id',

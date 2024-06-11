@@ -4,6 +4,17 @@ nelmio_api_doc:
             title: My App
             description: This is an awesome app!
             version: 1.0.0
-    areas: # to filter documented areas
+        tags:
+            - name: Gender
+              description: Endpoints related to genders
+            - name: Player
+              description: Endpoints related to players
+            - name: Game
+              description: Endpoints related to games
+            - name: Property
+              description: Endpoints related to properties
+            - name: Tournament
+              description: Endpoints related to tournaments
+    areas:
         path_patterns:
-            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+            - ^/api(?!/doc$)

@@ -21,6 +21,7 @@ class GenderController extends AbstractController
     #[OA\Get(
         path: '/api/genders',
         summary: 'Get all genders',
+        tags: ['Gender'],
         responses: [
             new OA\Response(
                 response: 200,
