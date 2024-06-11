@@ -16,8 +16,9 @@ class DoctrineTournamentRepository extends ServiceEntityRepository implements To
 
     public function save(Tournament $tournament): void
     {
-        $this->_em->persist($tournament);
-        $this->_em->flush();
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($tournament);
+        $entityManager->flush();
     }
 
     /**
