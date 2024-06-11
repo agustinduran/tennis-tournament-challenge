@@ -23,5 +23,6 @@ interface PlayerPropertyValueRepository
      * @param int $playerId
      * @return PlayerPropertyValue[]
      */
-    public function findByPlayer(int $playerId): array;
+    public function findByPlayerId(int $playerId): array;
+
 }

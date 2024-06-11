@@ -39,4 +39,14 @@ class DoctrineGameRepository extends ServiceEntityRepository implements GameRepo
     {
         return parent::find($id, $lockMode, $lockVersion);
     }
+
+    /**
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @return Game[]
+     */
+    public function findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
+    {
+        return parent::findBy($criteria, $orderBy, $limit, $offset);
+    }
 }

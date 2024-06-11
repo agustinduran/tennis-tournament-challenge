@@ -44,7 +44,7 @@ class DoctrinePlayerPropertyValueRepository extends ServiceEntityRepository impl
      * @param int $playerId
      * @return PlayerPropertyValue[]
      */
-    public function findByPlayer(int $playerId): array
+    public function findByPlayerId(int $playerId): array
     {
         return $this->findBy(['player' => $playerId]);
     }

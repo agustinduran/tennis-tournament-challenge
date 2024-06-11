@@ -15,6 +15,6 @@ class GetPlayerPropertyValuesByPlayerService
 
     public function execute(int $playerId): array
     {
-        return $this->playerPropertyValueRepository->findByPlayer($playerId);
+        return $this->playerPropertyValueRepository->findByPlayerId($playerId);
     }
 }
