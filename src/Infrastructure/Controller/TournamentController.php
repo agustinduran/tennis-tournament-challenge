@@ -5,6 +5,7 @@ namespace App\Infrastructure\Controller;
 use App\Application\Service\CreateTournamentService;
 use App\Application\Service\GetTournamentService;
 use App\Application\Service\GetTournamentsService;
+use App\Application\Service\GenerateGamesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,15 +18,18 @@ class TournamentController extends AbstractController
     private CreateTournamentService $createTournamentService;
     private GetTournamentService $getTournamentService;
     private GetTournamentsService $getTournamentsService;
+    private GenerateGamesService $generateGamesService;
 
     public function __construct(
         CreateTournamentService $createTournamentService,
         GetTournamentService $getTournamentService,
-        GetTournamentsService $getTournamentsService
+        GetTournamentsService $getTournamentsService,
+        GenerateGamesService $generateGamesService
     ) {
         $this->createTournamentService = $createTournamentService;
         $this->getTournamentService = $getTournamentService;
         $this->getTournamentsService = $getTournamentsService;
+        $this->generateGamesService = $generateGamesService;
     }
 
     #[Route('/api/tournaments', name: 'create_tournament', methods: ['POST'])]
@@ -175,5 +179,67 @@ class TournamentController extends AbstractController
         ];
 
         return new JsonResponse($data, JsonResponse::HTTP_OK);
+    }
+
+    #[Route('/api/tournaments/{id}/generate-games', name: 'generate_games', methods: ['POST'])]
+    #[OA\Post(
+        path: '/api/tournaments/{id}/generate-games',
+        tags: ['Tournament'],
+        summary: 'Generate games for a tournament',
+        requestBody: new OA\RequestBody(
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'playerIds', type: 'array', items: new OA\Items(type: 'integer'), example: [1, 2, 3, 4, 5, 6, 7, 8])
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'Games generated successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string', example: 'Games generated successfully')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 400,
+                description: 'Invalid input',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'error', type: 'string', example: 'Player count must be a power of 2 and at least 2.')
+                    ]
+                )
+            )
+        ]
+    )]
+    public function generateGames(int $id, Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        try {
+            $tournament = $this->getTournamentService->execute($id);
+            
+            if (!$tournament) {
+                return new JsonResponse(['error' => 'Tournament not found'], JsonResponse::HTTP_NOT_FOUND);
+            }
+
+            if (!$data) {
+                return new JsonResponse(['error' => 'Invalid input'], JsonResponse::HTTP_BAD_REQUEST);
+            }
+
+            $this->generateGamesService->execute($tournament, $data['playerIds']);
+
+            return new JsonResponse(['message' => 'Games generated successfully'], JsonResponse::HTTP_CREATED);
+        } catch (ValidationFailedException $e) {
+            $errors = [];
+            foreach ($e->getViolations() as $violation) {
+                $errors[$violation->getPropertyPath()] = $violation->getMessage();
+            }
+            return new JsonResponse(['errors' => $errors], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\InvalidArgumentException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        }
     }
 }
