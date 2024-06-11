@@ -53,8 +53,14 @@ class PlayerPropertyValueController extends AbstractController
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'id', type: 'integer'),
-                        new OA\Property(property: 'playerId', type: 'integer'),
-                        new OA\Property(property: 'propertyId', type: 'integer'),
+                        new OA\Property(
+                            property: 'player',
+                            ref: new OA\Schema(ref: '#/components/schemas/Player')
+                        ),
+                        new OA\Property(
+                            property: 'property',
+                            ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
+                        ),
                         new OA\Property(property: 'value', type: 'integer'),
                     ]
                 )
@@ -74,8 +80,14 @@ class PlayerPropertyValueController extends AbstractController
 
             return new JsonResponse([
                 'id' => $createdPlayerPropertyValue->getId(),
-                'playerId' => $createdPlayerPropertyValue->getPlayer()->getId(),
-                'propertyId' => $createdPlayerPropertyValue->getProperty()->getId(),
+                'player' => [
+                    'id' => $createdPlayerPropertyValue->getPlayer()->getId(),
+                    'fullName' => $createdPlayerPropertyValue->getPlayer()->getFullName(),
+                ],
+                'property' => [
+                    'id' => $createdPlayerPropertyValue->getProperty()->getId(),
+                    'name' => $createdPlayerPropertyValue->getProperty()->getName(),
+                ],
                 'value' => $createdPlayerPropertyValue->getValue(),
             ], JsonResponse::HTTP_CREATED);
         } catch (ValidationFailedException $e) {
@@ -103,8 +115,14 @@ class PlayerPropertyValueController extends AbstractController
                     items: new OA\Items(
                         properties: [
                             new OA\Property(property: 'id', type: 'integer'),
-                            new OA\Property(property: 'playerId', type: 'integer'),
-                            new OA\Property(property: 'propertyId', type: 'integer'),
+                            new OA\Property(
+                                property: 'player',
+                                ref: new OA\Schema(ref: '#/components/schemas/Player')
+                            ),
+                            new OA\Property(
+                                property: 'property',
+                                ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
+                            ),
                             new OA\Property(property: 'value', type: 'integer'),
                         ]
                     )
@@ -119,8 +137,14 @@ class PlayerPropertyValueController extends AbstractController
         $data = array_map(function ($playerPropertyValue) {
             return [
                 'id' => $playerPropertyValue->getId(),
-                'playerId' => $playerPropertyValue->getPlayer()->getId(),
-                'propertyId' => $playerPropertyValue->getProperty()->getId(),
+                'player' => [
+                    'id' => $playerPropertyValue->getPlayer()->getId(),
+                    'fullName' => $playerPropertyValue->getPlayer()->getFullName(),
+                ],
+                'property' => [
+                    'id' => $playerPropertyValue->getProperty()->getId(),
+                    'name' => $playerPropertyValue->getProperty()->getName(),
+                ],
                 'value' => $playerPropertyValue->getValue(),
             ];
         }, $playerPropertyValues);
@@ -148,8 +172,14 @@ class PlayerPropertyValueController extends AbstractController
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'id', type: 'integer'),
-                        new OA\Property(property: 'playerId', type: 'integer'),
-                        new OA\Property(property: 'propertyId', type: 'integer'),
+                        new OA\Property(
+                            property: 'player',
+                            ref: new OA\Schema(ref: '#/components/schemas/Player')
+                        ),
+                        new OA\Property(
+                            property: 'property',
+                            ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
+                        ),
                         new OA\Property(property: 'value', type: 'integer'),
                     ]
                 )
@@ -175,8 +205,14 @@ class PlayerPropertyValueController extends AbstractController
 
         $data = [
             'id' => $playerPropertyValue->getId(),
-            'playerId' => $playerPropertyValue->getPlayer()->getId(),
-            'propertyId' => $playerPropertyValue->getProperty()->getId(),
+            'player' => [
+                'id' => $playerPropertyValue->getPlayer()->getId(),
+                'fullName' => $playerPropertyValue->getPlayer()->getFullName(),
+            ],
+            'property' => [
+                'id' => $playerPropertyValue->getProperty()->getId(),
+                'name' => $playerPropertyValue->getProperty()->getName(),
+            ],
             'value' => $playerPropertyValue->getValue(),
         ];
 
@@ -205,8 +241,14 @@ class PlayerPropertyValueController extends AbstractController
                     items: new OA\Items(
                         properties: [
                             new OA\Property(property: 'id', type: 'integer'),
-                            new OA\Property(property: 'playerId', type: 'integer'),
-                            new OA\Property(property: 'propertyId', type: 'integer'),
+                            new OA\Property(
+                                property: 'player',
+                                ref: new OA\Schema(ref: '#/components/schemas/Player')
+                            ),
+                            new OA\Property(
+                                property: 'property',
+                                ref: new OA\Schema(ref: '#/components/schemas/PlayerProperty')
+                            ),
                             new OA\Property(property: 'value', type: 'integer'),
                         ]
                     )
@@ -221,8 +263,14 @@ class PlayerPropertyValueController extends AbstractController
         $data = array_map(function ($playerPropertyValue) {
             return [
                 'id' => $playerPropertyValue->getId(),
-                'playerId' => $playerPropertyValue->getPlayer()->getId(),
-                'propertyId' => $playerPropertyValue->getProperty()->getId(),
+                'player' => [
+                    'id' => $playerPropertyValue->getPlayer()->getId(),
+                    'fullName' => $playerPropertyValue->getPlayer()->getFullName(),
+                ],
+                'property' => [
+                    'id' => $playerPropertyValue->getProperty()->getId(),
+                    'name' => $playerPropertyValue->getProperty()->getName(),
+                ],
                 'value' => $playerPropertyValue->getValue(),
             ];
         }, $playerPropertyValues);
