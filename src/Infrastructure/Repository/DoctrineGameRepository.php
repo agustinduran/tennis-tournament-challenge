@@ -49,4 +49,19 @@ class DoctrineGameRepository extends ServiceEntityRepository implements GameRepo
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
+
+    /**
+     * @param array $criteria
+     * @return Game|null
+     */
+    public function findByTournamentAndStage(int $tournamentId, int $stage): ?Game
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.tournament = :tournamentId')
+            ->andWhere('g.stage = :stage')
+            ->setParameter('tournamentId', $tournamentId)
+            ->setParameter('stage', $stage)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

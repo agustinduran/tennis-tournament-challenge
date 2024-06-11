@@ -27,4 +27,10 @@ interface GameRepository
      * @return Game[]
      */
     public function findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array;
+
+    /**
+     * @param array $criteria
+     * @return Game|null
+     */
+    public function findByTournamentAndStage(int $tournamentId, int $stage): ?Game;
 }
