@@ -255,23 +255,15 @@ class TournamentController extends AbstractController
         }
     }
 
-    #[Route('/api/tournaments/{id}/winner', name: 'get_tournament_winner', methods: ['GET'])]
-    #[OA\Get(
-        path: '/api/tournaments/{id}/winner',
-        summary: 'Get the winner of the tournament',
+    #[Route('/api/tournaments/{id}/simulate', name: 'simulate_tournament', methods: ['POST'])]
+    #[OA\Post(
+        path: '/api/tournaments/{id}/simulate',
         tags: ['Tournament'],
-        parameters: [
-            new OA\Parameter(
-                name: 'id',
-                in: 'path',
-                required: true,
-                schema: new OA\Schema(type: 'integer')
-            )
-        ],
+        summary: 'Simulate a tournament and get the final winner. The games needs to be generated before',
         responses: [
             new OA\Response(
                 response: 200,
-                description: 'Returns the winner of the tournament',
+                description: 'Tournament simulated successfully',
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'winner', type: 'object', 
@@ -297,21 +289,29 @@ class TournamentController extends AbstractController
                 )
             ),
             new OA\Response(
-                response: 404,
-                description: 'No winner found for the tournament',
+                response: 400,
+                description: 'Invalid input',
                 content: new OA\JsonContent(
                     properties: [
-                        new OA\Property(property: 'error', type: 'string', example: 'No winner found for the tournament')
+                        new OA\Property(property: 'error', type: 'string', example: 'Player count must be a power of 2 and at least 2.')
                     ]
                 )
             )
         ]
     )]
-    public function getTournamentWinner(int $id): JsonResponse
+    public function simulateTournament(int $id, Request $request): JsonResponse
     {
         try {
+            $tournament = $this->getTournamentService->execute($id);
+
+            if (!$tournament) {
+                return new JsonResponse(['error' => 'Tournament not found'], JsonResponse::HTTP_NOT_FOUND);
+            }
+
+            $this->randomizeTournamentResultService->execute($tournament);
 
             $winner = $this->getPlayerWinnerTournamentService->execute($id);
+
             $finalBracket = $this->getTournamentBracketService->execute($id);
 
             return new JsonResponse([
@@ -321,8 +321,14 @@ class TournamentController extends AbstractController
                 ],
                 'bracket' => $finalBracket
             ], JsonResponse::HTTP_OK);
+        } catch (ValidationFailedException $e) {
+            $errors = [];
+            foreach ($e->getViolations() as $violation) {
+                $errors[$violation->getPropertyPath()] = $violation->getMessage();
+            }
+            return new JsonResponse(['errors' => $errors], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\InvalidArgumentException $e) {
-            return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_NOT_FOUND);
+            return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
 
@@ -404,7 +410,8 @@ class TournamentController extends AbstractController
                 'winner' => [
                     'id' => $winner->getId(),
                     'fullName' => $winner->getFullName()
-                ]
+                ],
+                'bracket' => $finalBracket
             ], JsonResponse::HTTP_OK);
         } catch (ValidationFailedException $e) {
             $errors = [];
@@ -414,6 +421,77 @@ class TournamentController extends AbstractController
             return new JsonResponse(['errors' => $errors], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/api/tournaments/{id}/winner', name: 'get_tournament_winner', methods: ['GET'])]
+    #[OA\Get(
+        path: '/api/tournaments/{id}/winner',
+        summary: 'Get the winner of the tournament',
+        tags: ['Tournament'],
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Returns the winner of the tournament',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'winner', type: 'object', 
+                            properties: [
+                                new OA\Property(property: 'id', type: 'integer'),
+                                new OA\Property(property: 'fullName', type: 'string'),
+                            ]
+                        ),
+                        new OA\Property(
+                            property: 'bracket',
+                            type: 'array',
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(property: 'stage', type: 'integer'),
+                                    new OA\Property(property: 'gameId', type: 'integer'),
+                                    new OA\Property(property: 'player1', type: 'string'),
+                                    new OA\Property(property: 'player2', type: 'string'),
+                                    new OA\Property(property: 'winner', type: 'string'),
+                                ]
+                            )
+                        )
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'No winner found for the tournament',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'error', type: 'string', example: 'No winner found for the tournament')
+                    ]
+                )
+            )
+        ]
+    )]
+    public function getTournamentWinner(int $id): JsonResponse
+    {
+        try {
+
+            $winner = $this->getPlayerWinnerTournamentService->execute($id);
+            $finalBracket = $this->getTournamentBracketService->execute($id);
+
+            return new JsonResponse([
+                'winner' => [
+                    'id' => $winner->getId(),
+                    'fullName' => $winner->getFullName()
+                ],
+                'bracket' => $finalBracket
+            ], JsonResponse::HTTP_OK);
+        } catch (\InvalidArgumentException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_NOT_FOUND);
         }
     }
 }
