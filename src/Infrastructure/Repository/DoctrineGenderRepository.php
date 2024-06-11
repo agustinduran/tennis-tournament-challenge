@@ -14,6 +14,13 @@ class DoctrineGenderRepository extends ServiceEntityRepository implements Gender
         parent::__construct($registry, Gender::class);
     }
 
+    public function save(Gender $gender): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($gender);
+        $entityManager->flush();
+    }
+
     /**
      * @return Gender[]
      */
@@ -24,6 +31,8 @@ class DoctrineGenderRepository extends ServiceEntityRepository implements Gender
 
     /**
      * @param int $id
+     * @param int|null $lockMode
+     * @param int|null $lockVersion
      * @return Gender|null
      */
     public function find($id, $lockMode = null, $lockVersion = null): ?Gender
