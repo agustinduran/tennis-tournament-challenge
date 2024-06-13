@@ -32,17 +32,22 @@ class GenerateGamesService
 
     public function execute(Tournament $tournament, array $playerIds): void
     {
+        // Valido que el torneo no haya generado los juegos anteriormente
         if ($this->tournamentRepository->getCountGames($tournament->getId()) > 0) {
             throw new InvalidArgumentException('Tournament already has games.');
         }
 
+        // Valido que los jugadores sean potencia de 2 y que mínimo hayan 2 jugadores.
         if (count($playerIds) < 2 || (count($playerIds) & (count($playerIds) - 1)) !== 0) {
             throw new InvalidArgumentException('Player count must be a power of 2 and at least 2.');
         }
 
-        // TODO: validar que no se repita un mismo jugador (ejemplo [9, 9, 9, 9])
+        // Valida que el array no tenga elementos repetidos (ejemplo [9, 9, 9, 9])
+        if (count($playerIds) !== count(array_unique($playerIds))) {
+            throw new InvalidArgumentException('Players array contains duplicate elements.');
+        }
 
-        // Obtengo y valido jugadores
+        // Obtengo y valido que los jugadores existen y que tienen el género solicitado por el torneo
         $players = [];
         foreach ($playerIds as $playerId) {
             $player = $this->playerRepository->find($playerId);
