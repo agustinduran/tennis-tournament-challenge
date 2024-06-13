@@ -52,10 +52,10 @@ class GameController extends AbstractController
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'id', type: 'integer'),
-                        new OA\Property(property: 'tournamentId', type: 'integer'),
-                        new OA\Property(property: 'player1Id', type: 'integer'),
-                        new OA\Property(property: 'player2Id', type: 'integer'),
-                        new OA\Property(property: 'winnerId', type: 'integer', nullable: true),
+                        new OA\Property(property: 'tournament', ref: '#/components/schemas/Tournament'),
+                        new OA\Property(property: 'player1', ref: '#/components/schemas/Player', nullable: true),
+                        new OA\Property(property: 'player2', ref: '#/components/schemas/Player', nullable: true),
+                        new OA\Property(property: 'winner', ref: '#/components/schemas/Player', nullable: true),
                         new OA\Property(property: 'nextGameId', type: 'integer', nullable: true),
                         new OA\Property(property: 'stage', type: 'integer')
                     ]
@@ -79,10 +79,26 @@ class GameController extends AbstractController
 
             return new JsonResponse([
                 'id' => $game->getId(),
-                'tournamentId' => $game->getTournament()->getId(),
-                'player1Id' => $game->getPlayer1()->getId(),
-                'player2Id' => $game->getPlayer2()->getId(),
-                'winnerId' => $game->getWinner() ? $game->getWinner()->getId() : null,
+                'tournament' => [
+                    'id' => $game->getTournament()->getId(),
+                    'title' => $game->getTournament()->getTitle()
+                ],
+                'player1' => $game->getPlayer1() ? [
+                        'id' => $game->getPlayer1()->getId(),
+                        'name' => $game->getPlayer1()->getFullname(),
+                        'habilityLevel' => $game->getPlayer1()->getHabilityLevel(),
+                        'luckyLevel' => $game->getPlayer1()->getLuckyLevel()
+                    ] : null,
+                'player2' => $game->getPlayer2() ? [
+                    'id' => $game->getPlayer2()->getId(),
+                    'name' => $game->getPlayer2()->getFullname(),
+                    'habilityLevel' => $game->getPlayer2()->getHabilityLevel(),
+                    'luckyLevel' => $game->getPlayer2()->getLuckyLevel()
+                ] : null,
+                'winner' => $game->getWinner() ? [
+                    'id' => $game->getWinner()->getId(),
+                    'name' => $game->getWinner()->getFullname()
+                ] : null,
                 'nextGameId' => $game->getNextGame() ? $game->getNextGame()->getId() : null,
                 'stage' => $game->getStage(),
             ], JsonResponse::HTTP_CREATED);
@@ -109,10 +125,10 @@ class GameController extends AbstractController
                     items: new OA\Items(
                         properties: [
                             new OA\Property(property: 'id', type: 'integer'),
-                            new OA\Property(property: 'tournamentId', type: 'integer'),
-                            new OA\Property(property: 'player1Id', type: 'integer'),
-                            new OA\Property(property: 'player2Id', type: 'integer'),
-                            new OA\Property(property: 'winnerId', type: 'integer', nullable: true),
+                            new OA\Property(property: 'tournament', ref: '#/components/schemas/Tournament'),
+                            new OA\Property(property: 'player1', ref: '#/components/schemas/Player', nullable: true),
+                            new OA\Property(property: 'player2', ref: '#/components/schemas/Player', nullable: true),
+                            new OA\Property(property: 'winner', ref: '#/components/schemas/Player', nullable: true),
                             new OA\Property(property: 'nextGameId', type: 'integer', nullable: true),
                             new OA\Property(property: 'stage', type: 'integer')
                         ]
@@ -128,10 +144,26 @@ class GameController extends AbstractController
         $data = array_map(function($game) {
             return [
                 'id' => $game->getId(),
-                'tournamentId' => $game->getTournament()->getId(),
-                'player1Id' => $game->getPlayer1()->getId(),
-                'player2Id' => $game->getPlayer2()->getId(),
-                'winnerId' => $game->getWinner() ? $game->getWinner()->getId() : null,
+                'tournament' => [
+                    'id' => $game->getTournament()->getId(),
+                    'title' => $game->getTournament()->getTitle()
+                ],
+                'player1' => $game->getPlayer1() ? [
+                        'id' => $game->getPlayer1()->getId(),
+                        'name' => $game->getPlayer1()->getFullname(),
+                        'habilityLevel' => $game->getPlayer1()->getHabilityLevel(),
+                        'luckyLevel' => $game->getPlayer1()->getLuckyLevel()
+                    ] : null,
+                'player2' => $game->getPlayer2() ? [
+                    'id' => $game->getPlayer2()->getId(),
+                    'name' => $game->getPlayer2()->getFullname(),
+                    'habilityLevel' => $game->getPlayer2()->getHabilityLevel(),
+                    'luckyLevel' => $game->getPlayer2()->getLuckyLevel()
+                ] : null,
+                'winner' => $game->getWinner() ? [
+                    'id' => $game->getWinner()->getId(),
+                    'name' => $game->getWinner()->getFullname()
+                ] : null,
                 'nextGameId' => $game->getNextGame() ? $game->getNextGame()->getId() : null,
                 'stage' => $game->getStage(),
             ];
@@ -160,10 +192,10 @@ class GameController extends AbstractController
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'id', type: 'integer'),
-                        new OA\Property(property: 'tournamentId', type: 'integer'),
-                        new OA\Property(property: 'player1Id', type: 'integer'),
-                        new OA\Property(property: 'player2Id', type: 'integer'),
-                        new OA\Property(property: 'winnerId', type: 'integer', nullable: true),
+                        new OA\Property(property: 'tournament', ref: '#/components/schemas/Tournament'),
+                        new OA\Property(property: 'player1', ref: '#/components/schemas/Player', nullable: true),
+                        new OA\Property(property: 'player2', ref: '#/components/schemas/Player', nullable: true),
+                        new OA\Property(property: 'winner', ref: '#/components/schemas/Player', nullable: true),
                         new OA\Property(property: 'nextGameId', type: 'integer', nullable: true),
                         new OA\Property(property: 'stage', type: 'integer')
                     ]
@@ -190,10 +222,26 @@ class GameController extends AbstractController
 
         $data = [
             'id' => $game->getId(),
-            'tournamentId' => $game->getTournament()->getId(),
-            'player1Id' => $game->getPlayer1()->getId(),
-            'player2Id' => $game->getPlayer2()->getId(),
-            'winnerId' => $game->getWinner() ? $game->getWinner()->getId() : null,
+            'tournament' => [
+                'id' => $game->getTournament()->getId(),
+                'title' => $game->getTournament()->getTitle()
+            ],
+            'player1' => $game->getPlayer1() ? [
+                    'id' => $game->getPlayer1()->getId(),
+                    'name' => $game->getPlayer1()->getFullname(),
+                    'habilityLevel' => $game->getPlayer1()->getHabilityLevel(),
+                    'luckyLevel' => $game->getPlayer1()->getLuckyLevel()
+                ] : null,
+            'player2' => $game->getPlayer2() ? [
+                'id' => $game->getPlayer2()->getId(),
+                'name' => $game->getPlayer2()->getFullname(),
+                'habilityLevel' => $game->getPlayer2()->getHabilityLevel(),
+                'luckyLevel' => $game->getPlayer2()->getLuckyLevel()
+            ] : null,
+            'winner' => $game->getWinner() ? [
+                'id' => $game->getWinner()->getId(),
+                'name' => $game->getWinner()->getFullname()
+            ] : null,
             'nextGameId' => $game->getNextGame() ? $game->getNextGame()->getId() : null,
             'stage' => $game->getStage(),
         ];

@@ -67,7 +67,7 @@ class TournamentController extends AbstractController
                         new OA\Property(property: 'id', type: 'integer'),
                         new OA\Property(property: 'title', type: 'string'),
                         new OA\Property(property: 'date', type: 'string', format: 'date'),
-                        new OA\Property(property: 'genderId', type: 'integer')
+                        new OA\Property(property: 'gender', ref: '#/components/schemas/Gender')
                     ]
                 )
             )
@@ -88,7 +88,10 @@ class TournamentController extends AbstractController
                 'id' => $tournament->getId(),
                 'title' => $tournament->getTitle(),
                 'date' => $tournament->getDate()->format('Y-m-d'),
-                'genderId' => $tournament->getGender()->getId(),
+                'gender' => [
+                    'id' => $tournament->getGender()->getId(),
+                    'name' => $tournament->getGender()->getName()
+                ]
             ], JsonResponse::HTTP_CREATED);
         } catch (ValidationFailedException $e) {
             $errors = [];
@@ -131,7 +134,7 @@ class TournamentController extends AbstractController
                             new OA\Property(property: 'id', type: 'integer'),
                             new OA\Property(property: 'title', type: 'string'),
                             new OA\Property(property: 'date', type: 'string', format: 'date'),
-                            new OA\Property(property: 'genderId', type: 'integer')
+                            new OA\Property(property: 'gender', ref: '#/components/schemas/Gender')
                         ]
                     )
                 )
@@ -150,7 +153,10 @@ class TournamentController extends AbstractController
                 'id' => $tournament->getId(),
                 'title' => $tournament->getTitle(),
                 'date' => $tournament->getDate()->format('Y-m-d'),
-                'genderId' => $tournament->getGender()->getId(),
+                'gender' => [
+                    'id' => $tournament->getGender()->getId(),
+                    'name' => $tournament->getGender()->getName()
+                ]
             ];
         }, $tournaments);
 
@@ -179,7 +185,7 @@ class TournamentController extends AbstractController
                         new OA\Property(property: 'id', type: 'integer'),
                         new OA\Property(property: 'title', type: 'string'),
                         new OA\Property(property: 'date', type: 'string', format: 'date'),
-                        new OA\Property(property: 'genderId', type: 'integer')
+                        new OA\Property(property: 'gender', ref: '#/components/schemas/Gender')
                     ]
                 )
             ),
@@ -206,7 +212,10 @@ class TournamentController extends AbstractController
             'id' => $tournament->getId(),
             'title' => $tournament->getTitle(),
             'date' => $tournament->getDate()->format('Y-m-d'),
-            'genderId' => $tournament->getGender()->getId(),
+            'gender' => [
+                'id' => $tournament->getGender()->getId(),
+                'name' => $tournament->getGender()->getName()
+            ]
         ];
 
         return new JsonResponse($data, JsonResponse::HTTP_OK);
