@@ -44,9 +44,6 @@ class CreatePlayerPropertyValueService
             throw new \InvalidArgumentException('Invalid property for player with id '.$player->getId().'. Gender doesn\'t match');
         }
 
-        // TODO: Validar que el valor esté dentro del rango permitido
-        // TODO: Validar que el jugador no tenga ya asignada esa propiedad
-
         $playerPropertyValue = new PlayerPropertyValue();
         $playerPropertyValue->setPlayer($player);
         $playerPropertyValue->setProperty($property);
